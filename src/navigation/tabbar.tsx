@@ -1,40 +1,60 @@
 import React from 'react'
-import { View } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 import { CharacterScreen } from 'src/modules/character'
 import { EpisodeScreen } from 'src/modules/episode'
 import { LocationScreen } from 'src/modules/location'
+import { colors } from 'src/theme/colors'
+import { BottomTabsParamList } from 'src/types'
+import { Planet, Rocket, TV } from 'src/ui/icons'
 
-import { Routes } from './routes'
+import { RoutesEnum } from './routes-enum'
 
-const Tab = createBottomTabNavigator()
+const Tab = createBottomTabNavigator<BottomTabsParamList>()
 
 export const TabBar = () => {
   return (
-    <Tab.Navigator initialRouteName={Routes.CharacterScreen}>
+    <Tab.Navigator
+      initialRouteName={RoutesEnum.CHARACTER}
+      screenOptions={{
+        tabBarHideOnKeyboard: true,
+        tabBarActiveTintColor: colors.indigo,
+      }}>
       <Tab.Screen
-        name={Routes.CharacterScreen}
+        name={RoutesEnum.CHARACTER}
+        key={RoutesEnum.CHARACTER}
         component={CharacterScreen}
         options={{
-          headerTitle: 'Characters',
-          tabBarIcon: ({ focused }) => <View />,
+          headerShown: false,
+          tabBarLabel: 'Character',
+          tabBarIcon: ({ focused }) => (
+            <Rocket color={focused ? colors.indigo : colors.grey} />
+          ),
         }}
       />
       <Tab.Screen
-        name={Routes.LocationScreen}
+        name={RoutesEnum.LOCATION}
+        key={RoutesEnum.LOCATION}
         component={LocationScreen}
         options={{
-          tabBarIcon: ({ focused }) => <View />,
+          headerShown: false,
+          tabBarLabel: 'Location',
+          tabBarIcon: ({ focused }) => (
+            <Planet color={focused ? colors.indigo : colors.grey} />
+          ),
         }}
       />
 
       <Tab.Screen
-        name={Routes.EpisodeScreen}
+        name={RoutesEnum.EPISODE}
+        key={RoutesEnum.EPISODE}
         component={EpisodeScreen}
         options={{
-          headerTitle: 'Episode',
-          tabBarIcon: ({ focused }) => <View />,
+          headerShown: false,
+          tabBarLabel: 'Episode',
+          tabBarIcon: ({ focused }) => (
+            <TV color={focused ? colors.indigo : colors.grey} />
+          ),
         }}
       />
     </Tab.Navigator>

@@ -3,32 +3,68 @@ import { TouchableOpacityProps } from 'react-native'
 import styled from 'styled-components/native'
 import { ifProp } from 'styled-tools'
 
-import { colors } from 'src/theme/colors'
-
-const ButtonBlock = styled.TouchableOpacity<{ isDisabled?: boolean }>`
+interface PropButton {
+  isDisabled?: boolean
+  colorBackground?: string
+  width?: number
+  colorBorder?: string
+  marginTop?: number
+}
+interface PropText {
+  colorText?: string
+}
+const ButtonBlock = styled.TouchableOpacity<PropButton>`
+  margin-top: ${({ marginTop }) => marginTop ?? 0}px;
+  background: ${({ colorBackground }) => colorBackground ?? 'transparent'};
+  width: ${({ width }) => width + 'px' ?? 'auto'};
   opacity: ${ifProp('isDisabled', '0.55', '1')};
-  padding: 24px 36px;
-  border-radius: 24px;
+  padding: 14px;
+  border-radius: 10px;
+  border: 2px solid ${({ colorBorder }) => colorBorder ?? 'transparent'};
 `
-const Title = styled.Text`
-  font-family: 'Montserrat-Bold';
+
+const Title = styled.Text<PropText>`
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 900;
+  font-size: 17px;
+  line-height: 22px;
   text-align: center;
-  color: ${colors.white};
+  color: ${({ colorText }) => colorText ?? 'transparent'};
 `
 
 interface Props extends TouchableOpacityProps {
   title?: string
   children?: ReactNode
   onPress?: () => void
+  colorBackground?: string
+  colorBorder?: string
+  colorText?: string
+  width?: number
+  marginTop?: number
 }
 
-export const Button = ({ children, onPress, title, ...rest }: Props) => {
+export const Button = ({
+  children,
+  onPress,
+  title,
+  colorBackground,
+  colorBorder,
+  colorText,
+  width = 323,
+  marginTop,
+  ...rest
+}: Props) => {
   return (
     <ButtonBlock
       isDisabled={Boolean(rest.disabled)}
       onPress={onPress}
+      colorBackground={colorBackground}
+      colorBorder={colorBorder}
+      width={width}
+      marginTop={marginTop}
       {...rest}>
-      <Title>{title}</Title>
+      <Title colorText={colorText}>{title}</Title>
       {children}
     </ButtonBlock>
   )

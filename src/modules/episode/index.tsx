@@ -1,10 +1,12 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { SafeAreaView } from 'react-native'
+
+import { Header } from 'src/ui/header'
 
 export const EpisodeScreen = () => {
   return (
-    <View>
-      <Text>Episode</Text>
-    </View>
+    <SafeAreaView>
+      <Header title="Episode" />
+    </SafeAreaView>
   )
 }

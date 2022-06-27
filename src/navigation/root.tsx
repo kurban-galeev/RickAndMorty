@@ -1,25 +1,43 @@
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-import { useAlertContext } from 'src/modules/alert-context'
-import { Alert } from 'src/ui/alert'
+import { CharacterScreen } from 'src/modules/character'
+import { CharacterFilter } from 'src/modules/character/character-filter'
+import { WelcomeScreen } from 'src/modules/welcome-screen'
 
-import { Routes } from './routes'
+import { RoutesEnum } from './routes-enum'
 import { TabBar } from './tabbar'
 
 const Stack = createNativeStackNavigator()
 
 export const RootNavigation = () => {
-  const { visible } = useAlertContext()
-
   return (
     <React.Fragment>
       <Stack.Navigator
         screenOptions={{ headerShown: false }}
-        initialRouteName={Routes.MainNavigator}>
-        <Stack.Screen name={Routes.MainNavigator} component={TabBar} />
+        initialRouteName={RoutesEnum.WELCOME}>
+        <Stack.Screen
+          name={RoutesEnum.WELCOME}
+          component={WelcomeScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={RoutesEnum.CHARACTER_FILTER}
+          component={CharacterFilter}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={RoutesEnum.LOCATION_FILTER}
+          component={CharacterFilter}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={RoutesEnum.EPISODE_FILTER}
+          component={CharacterFilter}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name={RoutesEnum.TAB_BAR} component={TabBar} />
       </Stack.Navigator>
-      {visible && <Alert />}
     </React.Fragment>
   )
 }

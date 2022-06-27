@@ -1,16 +1,20 @@
 import React from 'react'
+import { ApolloProvider } from '@apollo/client'
 import { NavigationContainer } from '@react-navigation/native'
 
 import { RootNavigation } from 'src/navigation/root'
 
-import { AlertProvider } from './modules/alert-context'
+import { client } from './graphql/apollo'
+import { FilterProvider } from './modules/filter-context'
 
 export const App = () => {
   return (
-    <AlertProvider>
-      <NavigationContainer>
-        <RootNavigation />
-      </NavigationContainer>
-    </AlertProvider>
+    <ApolloProvider client={client}>
+      <FilterProvider>
+        <NavigationContainer>
+          <RootNavigation />
+        </NavigationContainer>
+      </FilterProvider>
+    </ApolloProvider>
   )
 }

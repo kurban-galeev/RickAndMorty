@@ -1,11 +1,12 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { SafeAreaView } from 'react-native'
+
+import { Header } from 'src/ui/header'
 
 export const LocationScreen = () => {
   return (
-    <View>
-      <Text>Location</Text>
-    </View>
+    <SafeAreaView>
+      <Header title="Location" />
+    </SafeAreaView>
   )
 }
-
