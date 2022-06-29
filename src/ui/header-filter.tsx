@@ -1,7 +1,9 @@
 import React, { ReactNode } from 'react'
 import styled from 'styled-components/native'
 
+import { useFilterContext } from 'src/modules/filter-context'
 import { colors } from 'src/theme/colors'
+import { defaultFilter } from 'src/utils/constants'
 
 interface Props {
   title?: string
@@ -9,7 +11,7 @@ interface Props {
   onPress?: () => void
 }
 const HeaderBlock = styled.View`
-  height: 44px;
+  height: 60px;
   flex-direction: row;
   justify-content: space-between;
   background: ${colors.white[0]};
@@ -20,11 +22,13 @@ const Title = styled.Text`
   font-weight: 900;
   font-size: 15px;
   line-height: 20px;
-  text-align: center;
   color: ${colors.greenDark};
 `
-const ContainerButton = styled.View`
-  justify-content: flex-end;
+const ContainerButton = styled.TouchableOpacity`
+  position: absolute;
+  z-index: 1;
+  left: 16px;
+  top: 10px;
 `
 const ButtonApply = styled.TouchableOpacity`
   position: absolute;
@@ -43,20 +47,42 @@ const ButtonText = styled(Title)`
   line-height: 18px;
   color: ${colors.white[0]};
 `
+const ContainerTitle = styled.View`
+  margin-top: 10px;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+`
+
+const TextClear = styled(Title)`
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 22px;
+  color: ${colors.indigo};
+`
 
 export const HeaderFilter = ({
   children,
   title = 'Filter',
   onPress,
 }: Props) => {
+  const { setFilterContext } = useFilterContext()
+
+  const pressOnClear = () => {
+    setFilterContext(defaultFilter)
+  }
+
   return (
     <HeaderBlock>
-      <Title>{title}</Title>
-      <ContainerButton>
-        <ButtonApply onPress={onPress}>
-          <ButtonText>APPLY</ButtonText>
-        </ButtonApply>
+      <ContainerButton onPress={pressOnClear}>
+        <TextClear>Clear</TextClear>
       </ContainerButton>
+      <ContainerTitle>
+        <Title>{title}</Title>
+      </ContainerTitle>
+      <ButtonApply onPress={onPress}>
+        <ButtonText>APPLY</ButtonText>
+      </ButtonApply>
       {children}
     </HeaderBlock>
   )

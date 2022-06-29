@@ -8,8 +8,22 @@ export const InfoField = gql`
 `
 
 export const LOCATION_TYPE = gql`
-  query getLocationsTYPE($name: String, $page: Int) {
-    characters(page: $page, filter: { name: $name }) {
+  query getLocationsTYPE(
+    $name: String
+    $page: Int
+    $status: String
+    $gender: String
+    $species: String
+  ) {
+    characters(
+      page: $page
+      filter: {
+        name: $name
+        status: $status
+        gender: $gender
+        species: $species
+      }
+    ) {
       info {
         pages
         next

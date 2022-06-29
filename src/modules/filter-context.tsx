@@ -7,32 +7,32 @@ import React, {
 } from 'react'
 import noop from 'lodash/noop'
 
-import { ICharacterItems } from 'src/types'
+import { IFilter } from 'src/types'
+import { defaultFilter } from 'src/utils/constants'
 
 interface IFilterContext {
   isVisibleFilterCharacter: boolean
   setIsVisibleFilterCharacter: (isVisibleFilterCharacter: boolean) => void
-  characterItems: ICharacterItems[]
-  setCharacterItems: (item: ICharacterItems[]) => void
+  filterContext: IFilter
+  setFilterContext: (value: IFilter) => void
+  isVisibleSearchModalName: boolean
+  setIsVisibleSearchModalName: (value: boolean) => void
+  isVisibleSearchModalSpecies: boolean
+  setIsVisibleSearchModalSpecies: (value: boolean) => void
 }
 interface Props {
   children: ReactNode
 }
 
-const defaultCharacterItem = [
-  {
-    id: 0,
-    name: '',
-    status: '',
-    image: '',
-  },
-]
-
 const InitialValue: IFilterContext = {
   isVisibleFilterCharacter: false,
   setIsVisibleFilterCharacter: noop,
-  characterItems: defaultCharacterItem,
-  setCharacterItems: noop,
+  filterContext: defaultFilter,
+  setFilterContext: noop,
+  isVisibleSearchModalName: false,
+  setIsVisibleSearchModalName: noop,
+  isVisibleSearchModalSpecies: false,
+  setIsVisibleSearchModalSpecies: noop,
 }
 
 const FilterContext = createContext(InitialValue)
@@ -40,20 +40,32 @@ const FilterContext = createContext(InitialValue)
 export const FilterProvider = ({ children }: Props) => {
   const [isVisibleFilterCharacter, setIsVisibleFilterCharacter] =
     useState(false)
-  const [characterItems, setCharacterItems] = useState(defaultCharacterItem)
+  const [filterContext, setFilterContext] = useState(defaultFilter)
+  const [isVisibleSearchModalName, setIsVisibleSearchModalName] =
+    useState(false)
+  const [isVisibleSearchModalSpecies, setIsVisibleSearchModalSpecies] =
+    useState(false)
 
   const value = useMemo(
     () => ({
       isVisibleFilterCharacter,
       setIsVisibleFilterCharacter,
-      characterItems,
-      setCharacterItems,
+      filterContext,
+      setFilterContext,
+      isVisibleSearchModalName,
+      setIsVisibleSearchModalName,
+      isVisibleSearchModalSpecies,
+      setIsVisibleSearchModalSpecies,
     }),
     [
       isVisibleFilterCharacter,
       setIsVisibleFilterCharacter,
-      characterItems,
-      setCharacterItems,
+      filterContext,
+      setFilterContext,
+      isVisibleSearchModalName,
+      setIsVisibleSearchModalName,
+      isVisibleSearchModalSpecies,
+      setIsVisibleSearchModalSpecies,
     ],
   )
 

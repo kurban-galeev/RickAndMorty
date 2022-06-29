@@ -34,3 +34,9 @@ export interface ICharacterItems {
   name: string
   image: string
 }
+export interface IFilter {
+  status: string
+  name: string
+  gender: string
+  species: string
+}

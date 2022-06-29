@@ -28,7 +28,7 @@ export const TabBar = () => {
           headerShown: false,
           tabBarLabel: 'Character',
           tabBarIcon: ({ focused }) => (
-            <Rocket color={focused ? colors.indigo : colors.grey} />
+            <Rocket color={focused ? colors.indigo : colors.grey[0]} />
           ),
         }}
       />
@@ -40,7 +40,7 @@ export const TabBar = () => {
           headerShown: false,
           tabBarLabel: 'Location',
           tabBarIcon: ({ focused }) => (
-            <Planet color={focused ? colors.indigo : colors.grey} />
+            <Planet color={focused ? colors.indigo : colors.grey[0]} />
           ),
         }}
       />
@@ -53,7 +53,7 @@ export const TabBar = () => {
           headerShown: false,
           tabBarLabel: 'Episode',
           tabBarIcon: ({ focused }) => (
-            <TV color={focused ? colors.indigo : colors.grey} />
+            <TV color={focused ? colors.indigo : colors.grey[0]} />
           ),
         }}
       />

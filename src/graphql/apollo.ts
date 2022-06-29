@@ -9,7 +9,7 @@ export const client = new ApolloClient({
       Query: {
         fields: {
           characters: {
-            keyArgs: ['filter', []],
+            keyArgs: ['filter', ['status', 'name', 'gender', 'spesies']],
 
             merge(existing: Characters, incoming: Characters) {
               if (!existing) {
@@ -17,6 +17,10 @@ export const client = new ApolloClient({
               }
 
               if (!incoming) {
+                return existing
+              }
+
+              if (existing.info.next === incoming.info.next) {
                 return existing
               }
 

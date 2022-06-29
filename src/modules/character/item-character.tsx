@@ -25,7 +25,7 @@ const TextStatuse = styled.Text`
   font-weight: 400;
   font-size: 11px;
   line-height: 13px;
-  color: ${colors.grey};
+  color: ${colors.grey[2]};
 `
 const TextName = styled(TextStatuse)`
   padding: 0 0 0 12px;
@@ -42,7 +42,7 @@ export const ItemCharacter = ({
 }: PropCharacter): ReactElement => {
   return (
     <Container>
-      <Image style={{ height: 140 }} source={{ uri: image }} />
+      <Image style={{ height: 140 }} source={{ uri: image ?? undefined }} />
       <TextStatuse>{status}</TextStatuse>
       <TextName>{name}</TextName>
     </Container>

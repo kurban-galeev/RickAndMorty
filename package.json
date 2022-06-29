@@ -5,7 +5,7 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "start": "react-native start",
+    "start": "react-native start --reset-cache",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "build:ios": "react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios",
@@ -26,6 +26,7 @@
     "lodash": "4.17.21",
     "react": "17.0.2",
     "react-native": "0.65.1",
+    "react-native-bouncy-checkbox": "2.1.10",
     "react-native-modal": "13.0.1",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "3.8.0",

@@ -205,6 +205,9 @@ export type InfoFragment = { __typename?: 'Info'; pages: number; next: number }
 export type GetLocationsTypeQueryVariables = Exact<{
   name: InputMaybe<Scalars['String']>
   page: InputMaybe<Scalars['Int']>
+  status: InputMaybe<Scalars['String']>
+  gender: InputMaybe<Scalars['String']>
+  species: InputMaybe<Scalars['String']>
 }>
 
 export type GetLocationsTypeQuery = {
@@ -229,8 +232,22 @@ export const InfoFragmentDoc = gql`
   }
 `
 export const GetLocationsTypeDocument = gql`
-  query getLocationsTYPE($name: String, $page: Int) {
-    characters(page: $page, filter: { name: $name }) {
+  query getLocationsTYPE(
+    $name: String
+    $page: Int
+    $status: String
+    $gender: String
+    $species: String
+  ) {
+    characters(
+      page: $page
+      filter: {
+        name: $name
+        status: $status
+        gender: $gender
+        species: $species
+      }
+    ) {
       info {
         pages
         next
@@ -259,6 +276,9 @@ export const GetLocationsTypeDocument = gql`
  *   variables: {
  *      name: // value for 'name'
  *      page: // value for 'page'
+ *      status: // value for 'status'
+ *      gender: // value for 'gender'
+ *      species: // value for 'species'
  *   },
  * });
  */

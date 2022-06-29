@@ -1,3 +1,7 @@
 export { Rocket } from './rocket'
 export { Planet } from './planet'
 export { TV } from './tv'
+export { Arrow } from './arrow'
+export { ArrowBack } from './arrow-back'
+export { Micro } from './micro'
+export { SearchIcon } from './search-icon'
