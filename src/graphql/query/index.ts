@@ -33,6 +33,7 @@ export const LOCATION_TYPE = gql`
         image
         id
         status
+        species
       }
     }
   }

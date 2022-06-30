@@ -10,4 +10,10 @@ export const genderList = [
   { id: 3, gender: 'Genderless' },
   { id: 4, gender: 'Unknown' },
 ]
-export const defaultFilter = { status: '', name: '', gender: '', species: '' }
+export const defaultFilter = {
+  status: '',
+  name: '',
+  gender: '',
+  species: '',
+  isApply: false,
+}

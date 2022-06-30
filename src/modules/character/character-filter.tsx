@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { makeVar } from '@apollo/client'
 import styled from 'styled-components/native'
 
 import { useFilter } from 'src/hooks'
@@ -10,7 +9,7 @@ import { genderList, statusList } from 'src/utils/constants'
 
 import { Search } from '../../ui/search'
 import { useFilterContext } from '../filter-context'
-import { uniqueName } from '.'
+import { uniqueName, uniqueSpecies } from '.'
 import { CheckBox } from './checkbox'
 import { CheckBoxSearch } from './checkbox-search'
 
@@ -49,11 +48,14 @@ export const CharacterFilter = (): ReactElement => {
         isVisibleModal={isVisibleSearchModalName}
         setIsVisibleModal={setIsVisibleSearchModalName}
         data={uniqueName()}
+        isName={true}
       />
       <Search
         title="Species"
         isVisibleModal={isVisibleSearchModalSpecies}
         setIsVisibleModal={setIsVisibleSearchModalSpecies}
+        data={uniqueSpecies()}
+        isName={false}
       />
       <HeaderFilter onPress={pressOnApply} />
 

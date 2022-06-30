@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { ActivityIndicator, FlatList } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { makeVar } from '@apollo/client'
@@ -6,7 +6,6 @@ import { useNavigation } from '@react-navigation/native'
 import styled from 'styled-components/native'
 
 import { useGetLocationsTypeQuery } from 'src/graphql/generated/graphql'
-import { filter } from 'src/hooks'
 import { RoutesEnum } from 'src/navigation/routes-enum'
 import { Header } from 'src/ui/header'
 
@@ -23,33 +22,37 @@ const ContainerCharacter = styled.View`
   flex-direction: row;
 `
 export const uniqueName = makeVar<string[]>([])
+export const uniqueSpecies = makeVar<string[]>([])
 
 export const CharacterScreen = () => {
   const { navigate } = useNavigation<CharcterProp>()
 
   const pressOnFilter = () => navigate(RoutesEnum.CHARACTER_FILTER)
+  const { filterContext } = useFilterContext()
   const { data, loading, fetchMore } = useGetLocationsTypeQuery({
     variables: {
-      name: filter().name,
+      name: filterContext.isApply ? filterContext.name : '',
       page: 1,
-      status: filter().status,
-      gender: filter().gender,
-      species: filter().species,
+      status: filterContext.isApply ? filterContext.status : '',
+      gender: filterContext.isApply ? filterContext.gender : '',
+      species: filterContext.isApply ? filterContext.gender : '',
     },
   })
   const nextPage = data?.characters?.info?.next
   const results = data?.characters?.results
 
-  // const getUniqueName = () => {
   if (!loading && results) {
-    const unique = Array.from(
+    const uniqueNam = Array.from(
       new Set(results.map((item) => JSON.stringify(item.name))),
     ).map((item) => JSON.parse(item))
-    uniqueName(unique)
 
-    // return unique
+    const uniqueSpecie = Array.from(
+      new Set(results.map((item) => JSON.stringify(item.species))),
+    ).map((item) => JSON.parse(item))
+
+    uniqueSpecies(uniqueSpecie)
+    uniqueName(uniqueNam)
   }
-  // }
 
   const fetchMoreCharacter = async () => {
     await fetchMore({

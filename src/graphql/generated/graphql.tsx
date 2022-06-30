@@ -221,6 +221,7 @@ export type GetLocationsTypeQuery = {
       image: string
       id: string
       status: string
+      species: string
     }>
   }
 }
@@ -257,6 +258,7 @@ export const GetLocationsTypeDocument = gql`
         image
         id
         status
+        species
       }
     }
   }

@@ -1,24 +1,26 @@
-import React from 'react'
-import { FlatList, Text, View } from 'react-native'
+import React, { useState } from 'react'
+import { FlatList } from 'react-native'
 import Modal from 'react-native-modal'
 import styled from 'styled-components/native'
 
+import { useFilterContext } from 'src/modules/filter-context'
 import { colors } from 'src/theme/colors'
 import { Back } from 'src/ui/back'
 
-import { Inpute } from './input'
+import { Input } from './input'
 
 interface PropSearch {
   title: string
   isVisibleModal: boolean
   setIsVisibleModal: (isVisibleModal: boolean) => void
-  data?: []
+  data: string[]
+  isName: boolean
 }
 const Container = styled.View`
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 250px;
+  height: 320px;
   background: ${colors.white[0]};
 `
 const TextTitle = styled.Text`
@@ -41,6 +43,7 @@ const Header = styled.View`
 
 const TextDescription = styled(TextTitle)`
   padding: 0;
+  text-align: left;
 `
 const ContainerItem = styled.TouchableOpacity`
   border-bottom-width: 1px;
@@ -54,10 +57,16 @@ export const Search = ({
   isVisibleModal,
   setIsVisibleModal,
   data,
+  isName,
 }: PropSearch) => {
   const closeModal = () => {
     setIsVisibleModal(false)
+    isName
+      ? setFilterContext({ ...filterContext, name: textInput })
+      : setFilterContext({ ...filterContext, species: textInput })
   }
+  const { setFilterContext, filterContext } = useFilterContext()
+  const [textInput, setTextInput] = useState('')
 
   return (
     <Modal
@@ -70,14 +79,14 @@ export const Search = ({
           <Back closeModal={closeModal} />
           <TextTitle>{title}</TextTitle>
           <ContainerInput>
-            <Inpute />
+            <Input value={textInput} setValue={setTextInput} />
           </ContainerInput>
         </Header>
         <FlatList
           data={data}
           keyExtractor={(item) => String(item)}
           renderItem={({ item }) => (
-            <ContainerItem>
+            <ContainerItem onPress={() => setTextInput(item)}>
               <TextDescription>{item}</TextDescription>
             </ContainerItem>
           )}

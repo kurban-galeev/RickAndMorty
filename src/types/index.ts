@@ -39,4 +39,5 @@ export interface IFilter {
   name: string
   gender: string
   species: string
+  isApply: boolean
 }
