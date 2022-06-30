@@ -17,3 +17,14 @@ export const defaultFilter = {
   species: '',
   isApply: false,
 }
+
+export const defaultItemDetail = {
+  name: '',
+  image: '',
+  id: '',
+  status: '',
+  species: '',
+  gender: '',
+  type: '',
+}
+export const pathHeaderImage = 'assets/images/headerDetail.png'

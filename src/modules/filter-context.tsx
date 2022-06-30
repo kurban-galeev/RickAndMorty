@@ -19,6 +19,8 @@ interface IFilterContext {
   setIsVisibleSearchModalName: (value: boolean) => void
   isVisibleSearchModalSpecies: boolean
   setIsVisibleSearchModalSpecies: (value: boolean) => void
+  idDetail: string
+  setIdDetail: (value: string) => void
 }
 interface Props {
   children: ReactNode
@@ -33,6 +35,8 @@ const InitialValue: IFilterContext = {
   setIsVisibleSearchModalName: noop,
   isVisibleSearchModalSpecies: false,
   setIsVisibleSearchModalSpecies: noop,
+  idDetail: '',
+  setIdDetail: noop,
 }
 
 const FilterContext = createContext(InitialValue)
@@ -45,6 +49,7 @@ export const FilterProvider = ({ children }: Props) => {
     useState(false)
   const [isVisibleSearchModalSpecies, setIsVisibleSearchModalSpecies] =
     useState(false)
+  const [idDetail, setIdDetail] = useState('')
 
   const value = useMemo(
     () => ({
@@ -56,6 +61,8 @@ export const FilterProvider = ({ children }: Props) => {
       setIsVisibleSearchModalName,
       isVisibleSearchModalSpecies,
       setIsVisibleSearchModalSpecies,
+      idDetail,
+      setIdDetail,
     }),
     [
       isVisibleFilterCharacter,
@@ -66,6 +73,8 @@ export const FilterProvider = ({ children }: Props) => {
       setIsVisibleSearchModalName,
       isVisibleSearchModalSpecies,
       setIsVisibleSearchModalSpecies,
+      idDetail,
+      setIdDetail,
     ],
   )
 

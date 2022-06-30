@@ -12,6 +12,7 @@ export type MainParamList = {
 export type CharacterParamList = {
   [RoutesEnum.CHARACTER]: undefined
   [RoutesEnum.CHARACTER_FILTER]: undefined
+  [RoutesEnum.CHARACTER_DETAIL]: undefined
 }
 
 export type LocationParamList = {

@@ -1,8 +1,8 @@
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-import { CharacterScreen } from 'src/modules/character'
 import { CharacterFilter } from 'src/modules/character/character-filter'
+import { DetailScreen } from 'src/modules/character/detail-screen'
 import { WelcomeScreen } from 'src/modules/welcome-screen'
 
 import { RoutesEnum } from './routes-enum'
@@ -24,6 +24,11 @@ export const RootNavigation = () => {
         <Stack.Screen
           name={RoutesEnum.CHARACTER_FILTER}
           component={CharacterFilter}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={RoutesEnum.CHARACTER_DETAIL}
+          component={DetailScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen

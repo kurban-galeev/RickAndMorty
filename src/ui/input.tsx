@@ -44,7 +44,7 @@ export const Input = ({ value, setValue }: Prop) => {
         placeholderTextColor={colors.grey[0]}
         value={value}
         onChangeText={(text: string) => {
-          if (text.length <= 30) {
+          if (text.length <= 40) {
             setValue(text)
           }
         }}

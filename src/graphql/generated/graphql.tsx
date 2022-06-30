@@ -202,7 +202,7 @@ export type QueryLocationsByIdsArgs = {
 
 export type InfoFragment = { __typename?: 'Info'; pages: number; next: number }
 
-export type GetLocationsTypeQueryVariables = Exact<{
+export type GetCharactersQueryVariables = Exact<{
   name: InputMaybe<Scalars['String']>
   page: InputMaybe<Scalars['Int']>
   status: InputMaybe<Scalars['String']>
@@ -210,7 +210,7 @@ export type GetLocationsTypeQueryVariables = Exact<{
   species: InputMaybe<Scalars['String']>
 }>
 
-export type GetLocationsTypeQuery = {
+export type GetCharactersQuery = {
   __typename?: 'Query'
   characters: {
     __typename?: 'Characters'
@@ -226,14 +226,42 @@ export type GetLocationsTypeQuery = {
   }
 }
 
+export type GetCharacterQueryVariables = Exact<{
+  id: Scalars['ID']
+}>
+
+export type GetCharacterQuery = {
+  __typename?: 'Query'
+  character: {
+    __typename?: 'Character'
+    id: string
+    name: string
+    status: string
+    species: string
+    type: string
+    gender: string
+    image: string
+    created: string
+    origin: { __typename?: 'Location'; name: string }
+    location: { __typename?: 'Location'; name: string }
+    episode: Array<{
+      __typename?: 'Episode'
+      id: string
+      name: string
+      episode: string
+      air_date: string
+    }>
+  }
+}
+
 export const InfoFragmentDoc = gql`
   fragment info on Info {
     pages
     next
   }
 `
-export const GetLocationsTypeDocument = gql`
-  query getLocationsTYPE(
+export const GetCharactersDocument = gql`
+  query getCharacters(
     $name: String
     $page: Int
     $status: String
@@ -265,16 +293,16 @@ export const GetLocationsTypeDocument = gql`
 `
 
 /**
- * __useGetLocationsTypeQuery__
+ * __useGetCharactersQuery__
  *
- * To run a query within a React component, call `useGetLocationsTypeQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetLocationsTypeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetCharactersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCharactersQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetLocationsTypeQuery({
+ * const { data, loading, error } = useGetCharactersQuery({
  *   variables: {
  *      name: // value for 'name'
  *      page: // value for 'page'
@@ -284,40 +312,120 @@ export const GetLocationsTypeDocument = gql`
  *   },
  * });
  */
-export function useGetLocationsTypeQuery(
+export function useGetCharactersQuery(
   baseOptions?: Apollo.QueryHookOptions<
-    GetLocationsTypeQuery,
-    GetLocationsTypeQueryVariables
+    GetCharactersQuery,
+    GetCharactersQueryVariables
   >,
 ) {
   const options = { ...defaultOptions, ...baseOptions }
 
-  return Apollo.useQuery<GetLocationsTypeQuery, GetLocationsTypeQueryVariables>(
-    GetLocationsTypeDocument,
+  return Apollo.useQuery<GetCharactersQuery, GetCharactersQueryVariables>(
+    GetCharactersDocument,
     options,
   )
 }
 
-export function useGetLocationsTypeLazyQuery(
+export function useGetCharactersLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
-    GetLocationsTypeQuery,
-    GetLocationsTypeQueryVariables
+    GetCharactersQuery,
+    GetCharactersQueryVariables
   >,
 ) {
   const options = { ...defaultOptions, ...baseOptions }
 
-  return Apollo.useLazyQuery<
-    GetLocationsTypeQuery,
-    GetLocationsTypeQueryVariables
-  >(GetLocationsTypeDocument, options)
+  return Apollo.useLazyQuery<GetCharactersQuery, GetCharactersQueryVariables>(
+    GetCharactersDocument,
+    options,
+  )
 }
-export type GetLocationsTypeQueryHookResult = ReturnType<
-  typeof useGetLocationsTypeQuery
+export type GetCharactersQueryHookResult = ReturnType<
+  typeof useGetCharactersQuery
 >
-export type GetLocationsTypeLazyQueryHookResult = ReturnType<
-  typeof useGetLocationsTypeLazyQuery
+export type GetCharactersLazyQueryHookResult = ReturnType<
+  typeof useGetCharactersLazyQuery
 >
-export type GetLocationsTypeQueryResult = Apollo.QueryResult<
-  GetLocationsTypeQuery,
-  GetLocationsTypeQueryVariables
+export type GetCharactersQueryResult = Apollo.QueryResult<
+  GetCharactersQuery,
+  GetCharactersQueryVariables
+>
+export const GetCharacterDocument = gql`
+  query getCharacter($id: ID!) {
+    character(id: $id) {
+      id
+      name
+      status
+      species
+      type
+      gender
+      origin {
+        name
+      }
+      location {
+        name
+      }
+      image
+      episode {
+        id
+        name
+        episode
+        air_date
+      }
+      created
+    }
+  }
+`
+
+/**
+ * __useGetCharacterQuery__
+ *
+ * To run a query within a React component, call `useGetCharacterQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCharacterQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCharacterQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetCharacterQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetCharacterQuery,
+    GetCharacterQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+
+  return Apollo.useQuery<GetCharacterQuery, GetCharacterQueryVariables>(
+    GetCharacterDocument,
+    options,
+  )
+}
+
+export function useGetCharacterLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetCharacterQuery,
+    GetCharacterQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+
+  return Apollo.useLazyQuery<GetCharacterQuery, GetCharacterQueryVariables>(
+    GetCharacterDocument,
+    options,
+  )
+}
+export type GetCharacterQueryHookResult = ReturnType<
+  typeof useGetCharacterQuery
+>
+export type GetCharacterLazyQueryHookResult = ReturnType<
+  typeof useGetCharacterLazyQuery
+>
+export type GetCharacterQueryResult = Apollo.QueryResult<
+  GetCharacterQuery,
+  GetCharacterQueryVariables
 >

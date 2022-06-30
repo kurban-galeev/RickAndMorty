@@ -65,8 +65,10 @@ export const Search = ({
       ? setFilterContext({ ...filterContext, name: textInput })
       : setFilterContext({ ...filterContext, species: textInput })
   }
+
   const { setFilterContext, filterContext } = useFilterContext()
-  const [textInput, setTextInput] = useState('')
+  const defaultValueInput = isName ? filterContext.name : filterContext.species
+  const [textInput, setTextInput] = useState(defaultValueInput)
 
   return (
     <Modal

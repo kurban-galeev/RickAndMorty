@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native'
 
 import { useFilterContext } from 'src/modules/filter-context'
 
-export const useFilter = () => {
+export const useFilterCharacter = () => {
   const { goBack } = useNavigation()
   const { filterContext, setFilterContext } = useFilterContext()
 

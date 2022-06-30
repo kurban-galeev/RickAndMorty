@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import styled from 'styled-components/native'
 
-import { useFilter } from 'src/hooks'
+import { useFilterCharacter } from 'src/hooks'
 import { colors } from 'src/theme/colors'
 import { HeaderFilter } from 'src/ui/header-filter'
 import { genderList, statusList } from 'src/utils/constants'
@@ -10,8 +10,8 @@ import { genderList, statusList } from 'src/utils/constants'
 import { Search } from '../../ui/search'
 import { useFilterContext } from '../filter-context'
 import { uniqueName, uniqueSpecies } from '.'
-import { CheckBox } from './checkbox'
-import { CheckBoxSearch } from './checkbox-search'
+import { CheckBox } from './ui/checkbox/checkbox'
+import { CheckBoxSearch } from './ui/checkbox/checkbox-search'
 
 const Container = styled.View`
   margin-bottom: 18px;
@@ -33,7 +33,7 @@ const ContainerTitle = styled.View`
 `
 
 export const CharacterFilter = (): ReactElement => {
-  const { pressOnApply } = useFilter()
+  const { pressOnApply } = useFilterCharacter()
   const {
     isVisibleSearchModalName,
     isVisibleSearchModalSpecies,

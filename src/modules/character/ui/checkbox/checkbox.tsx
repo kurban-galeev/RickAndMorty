@@ -4,8 +4,8 @@ import styled from 'styled-components/native'
 
 import { colors } from 'src/theme/colors'
 
-import { useFilterContext } from '../filter-context'
-import { PropCheckbox } from './types'
+import { useFilterContext } from '../../../filter-context'
+import { PropCheckbox } from '../../types'
 
 const Container = styled(BouncyCheckbox)`
   margin-left: 19px;
@@ -32,7 +32,6 @@ export const CheckBox = ({
   isStatus,
 }: PropCheckbox): ReactElement => {
   const { setFilterContext, filterContext } = useFilterContext()
-  // console.log(filterContext, 'Context')
 
   return (
     <Container

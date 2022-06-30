@@ -1,13 +1,12 @@
 import React, { ReactElement } from 'react'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
-import { noop } from 'lodash'
 import styled from 'styled-components/native'
 
 import { colors } from 'src/theme/colors'
 
-import { useFilterContext } from '../filter-context'
+import { useFilterContext } from '../../../filter-context'
+import { PropCheckbox } from '../../types'
 import { TextCheckbox } from './text-checkbox'
-import { PropCheckbox } from './types'
 
 const Container = styled(BouncyCheckbox)`
   margin-left: 19px;

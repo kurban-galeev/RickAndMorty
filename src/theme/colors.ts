@@ -8,6 +8,8 @@ export const colors = {
     'rgba(118, 118, 128, 0.12)',
     'rgba(0, 0, 0, 0.2)',
     '#AEAEB2',
+    '#F2F2F7',
+    '#8e8e93',
   ],
   indigo: '#5856D6',
 }

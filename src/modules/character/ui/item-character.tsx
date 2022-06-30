@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react'
 import { Image } from 'react-native'
+import { noop } from 'lodash'
 import styled from 'styled-components/native'
 
 import { colors } from 'src/theme/colors'
@@ -8,10 +9,11 @@ interface PropCharacter {
   status: string | null | undefined
   image: string | null | undefined
   name: string | null | undefined
+  onPress: () => void
 }
 
-const Container = styled.View`
-  margin: 9px 5px 11px 9px;
+const Container = styled.TouchableOpacity`
+  margin: 9px 5px;
   border-width: 1px;
   border-color: ${colors.white[1]};
   border-radius: 8px;
@@ -29,6 +31,7 @@ const TextStatuse = styled.Text`
 `
 const TextName = styled(TextStatuse)`
   padding: 0 0 0 12px;
+  max-height: 50px;
   font-weight: 900;
   font-size: 17px;
   line-height: 22px;
@@ -39,9 +42,10 @@ export const ItemCharacter = ({
   status,
   image,
   name,
+  onPress,
 }: PropCharacter): ReactElement => {
   return (
-    <Container>
+    <Container activeOpacity={0.8} onPress={() => onPress()}>
       <Image style={{ height: 140 }} source={{ uri: image ?? undefined }} />
       <TextStatuse>{status}</TextStatuse>
       <TextName>{name}</TextName>
