@@ -4,9 +4,9 @@ import styled from 'styled-components/native'
 import { colors } from 'src/theme/colors'
 import { Micro, SearchIcon } from 'src/ui/icons'
 
-interface Prop {
+interface Prop<T> {
   value: string
-  setValue: (value: string) => void
+  setValue: (value: T) => void
 }
 
 const InputeText = styled.TextInput`
@@ -32,7 +32,7 @@ const ContainerMicro = styled.View`
   right: 10px;
 `
 
-export const Input = ({ value, setValue }: Prop) => {
+export const Input = ({ value, setValue }: Prop<string>) => {
   return (
     <Container>
       <ContainerSearchIcon>
@@ -43,7 +43,7 @@ export const Input = ({ value, setValue }: Prop) => {
         placeholder="Search"
         placeholderTextColor={colors.grey[0]}
         value={value}
-        onChangeText={(text: string) => {
+        onChangeText={(text) => {
           if (text.length <= 40) {
             setValue(text)
           }

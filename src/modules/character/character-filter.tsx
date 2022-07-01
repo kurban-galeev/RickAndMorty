@@ -2,16 +2,20 @@ import React, { ReactElement } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import styled from 'styled-components/native'
 
-import { useFilterCharacter } from 'src/hooks'
+import { useFilter } from 'src/hooks'
 import { colors } from 'src/theme/colors'
+import { CheckBox } from 'src/ui/checkbox/checkbox'
+import { CheckBoxSearch } from 'src/ui/checkbox/checkbox-search'
 import { HeaderFilter } from 'src/ui/header-filter'
-import { genderList, statusList } from 'src/utils/constants'
+import {
+  defaultFilterCharacter,
+  genderList,
+  statusList,
+} from 'src/utils/constants'
 
 import { Search } from '../../ui/search'
-import { useFilterContext } from '../filter-context'
-import { uniqueName, uniqueSpecies } from '.'
-import { CheckBox } from './ui/checkbox/checkbox'
-import { CheckBoxSearch } from './ui/checkbox/checkbox-search'
+import { uniqueNameCharacter, uniqueSpeciesCharacter } from '.'
+import { useFilterCharacter } from './filter-context'
 
 const Container = styled.View`
   margin-bottom: 18px;
@@ -33,13 +37,20 @@ const ContainerTitle = styled.View`
 `
 
 export const CharacterFilter = (): ReactElement => {
-  const { pressOnApply } = useFilterCharacter()
   const {
     isVisibleSearchModalName,
     isVisibleSearchModalSpecies,
     setIsVisibleSearchModalName,
     setIsVisibleSearchModalSpecies,
-  } = useFilterContext()
+    filterCharacter,
+    setIsApply,
+    setFilterCharacter,
+  } = useFilterCharacter()
+  const { pressOnApply } = useFilter({ setIsApply })
+
+  const pressOnClear = () => {
+    setFilterCharacter(defaultFilterCharacter)
+  }
 
   return (
     <SafeAreaView style={{ backgroundColor: colors.white[0], flex: 1 }}>
@@ -47,30 +58,38 @@ export const CharacterFilter = (): ReactElement => {
         title="Name"
         isVisibleModal={isVisibleSearchModalName}
         setIsVisibleModal={setIsVisibleSearchModalName}
-        data={uniqueName()}
-        isName={true}
+        data={uniqueNameCharacter()}
+        objectField="name"
+        filterContext={filterCharacter}
+        setFilterContext={setFilterCharacter}
       />
       <Search
         title="Species"
         isVisibleModal={isVisibleSearchModalSpecies}
         setIsVisibleModal={setIsVisibleSearchModalSpecies}
-        data={uniqueSpecies()}
-        isName={false}
+        data={uniqueSpeciesCharacter()}
+        objectField="species"
+        filterContext={filterCharacter}
+        setFilterContext={setFilterCharacter}
       />
-      <HeaderFilter onPress={pressOnApply} />
+      <HeaderFilter onPress={pressOnApply} pressOnClear={pressOnClear} />
 
       <Container>
         <CheckBoxSearch
           textTitle="Name"
           textDescription="Give a name"
-          isName={true}
+          filterContext={filterCharacter}
+          objectField="name"
+          setIsVisibleSearchModal={setIsVisibleSearchModalName}
         />
       </Container>
       <Container>
         <CheckBoxSearch
           textTitle="Species"
           textDescription="Select one"
-          isName={false}
+          filterContext={filterCharacter}
+          objectField="species"
+          setIsVisibleSearchModal={setIsVisibleSearchModalSpecies}
         />
       </Container>
 

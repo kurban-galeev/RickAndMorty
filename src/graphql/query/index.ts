@@ -64,3 +64,27 @@ export const CHARACTER = gql`
     }
   }
 `
+export const LOCATIONS = gql`
+  query getLocations(
+    $name: String
+    $page: Int
+    $type: String
+    $dimension: String
+  ) {
+    locations(
+      page: $page
+      filter: { name: $name, type: $type, dimension: $dimension }
+    ) {
+      info {
+        pages
+        next
+      }
+      results {
+        id
+        name
+        type
+        dimension
+      }
+    }
+  }
+`

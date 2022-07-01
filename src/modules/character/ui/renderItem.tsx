@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react'
 import styled from 'styled-components/native'
 
 import { colors } from 'src/theme/colors'
+import { Arrow } from 'src/ui/icons'
 
 interface Prop {
   episode: string
@@ -10,7 +11,7 @@ interface Prop {
   isLast?: boolean
 }
 
-const Container = styled.View<{ isLast: boolean }>`
+const Container = styled.TouchableOpacity<{ isLast: boolean }>`
   border-bottom-width: ${({ isLast }) => (isLast ? 0 : 1)}px;
   border-color: ${colors.grey[2]};
   margin: 0 16px;
@@ -38,6 +39,11 @@ const TextDate = styled(TextEpisode)`
   text-transform: uppercase;
   color: ${colors.grey[5]};
 `
+const ContainerArrow = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`
 
 export const RenderItem = ({
   episode,
@@ -46,9 +52,12 @@ export const RenderItem = ({
   isLast = false,
 }: Prop): ReactElement => {
   return (
-    <Container isLast={isLast}>
+    <Container isLast={isLast} activeOpacity={0.7}>
       <TextEpisode>{episode}</TextEpisode>
-      <TextName>{name}</TextName>
+      <ContainerArrow>
+        <TextName>{name}</TextName>
+        <Arrow />
+      </ContainerArrow>
       <TextDate>{date}</TextDate>
     </Container>
   )

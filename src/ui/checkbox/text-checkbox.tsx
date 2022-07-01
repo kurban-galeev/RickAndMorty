@@ -1,10 +1,9 @@
 import React, { ReactElement } from 'react'
 import styled from 'styled-components/native'
 
+import { PropCheckbox } from 'src/modules/character/types'
 import { colors } from 'src/theme/colors'
 import { Arrow } from 'src/ui/icons'
-
-import { PropCheckbox } from '../../types'
 
 const ContainerText = styled.View`
   margin: 10px 0 10px 16px;

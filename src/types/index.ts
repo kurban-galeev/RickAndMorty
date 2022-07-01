@@ -35,10 +35,14 @@ export interface ICharacterItems {
   name: string
   image: string
 }
-export interface IFilter {
+export interface IFilterCharacter {
   status: string
   name: string
   gender: string
   species: string
-  isApply: boolean
+}
+export interface IFilterLocation {
+  name: string
+  type: string
+  dimension: string
 }

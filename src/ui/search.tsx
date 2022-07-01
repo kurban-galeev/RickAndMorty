@@ -3,18 +3,19 @@ import { FlatList } from 'react-native'
 import Modal from 'react-native-modal'
 import styled from 'styled-components/native'
 
-import { useFilterContext } from 'src/modules/filter-context'
 import { colors } from 'src/theme/colors'
 import { Back } from 'src/ui/back'
 
 import { Input } from './input'
 
-interface PropSearch {
+interface PropSearch<T> {
   title: string
   isVisibleModal: boolean
   setIsVisibleModal: (isVisibleModal: boolean) => void
   data: string[]
-  isName: boolean
+  objectField: keyof T
+  filterContext: T
+  setFilterContext: (value: T) => void
 }
 const Container = styled.View`
   position: absolute;
@@ -52,23 +53,25 @@ const ContainerItem = styled.TouchableOpacity`
   padding: 8px 0 8px 0;
 `
 
-export const Search = ({
+export const Search = <
+  T extends { [K in keyof T]: T[K] extends string ? string : never },
+>({
   title,
   isVisibleModal,
   setIsVisibleModal,
   data,
-  isName,
-}: PropSearch) => {
+  objectField,
+  filterContext,
+  setFilterContext,
+}: PropSearch<T>) => {
   const closeModal = () => {
     setIsVisibleModal(false)
-    isName
-      ? setFilterContext({ ...filterContext, name: textInput })
-      : setFilterContext({ ...filterContext, species: textInput })
+
+    setFilterContext({ ...filterContext, [objectField]: textInput })
   }
 
-  const { setFilterContext, filterContext } = useFilterContext()
-  const defaultValueInput = isName ? filterContext.name : filterContext.species
-  const [textInput, setTextInput] = useState(defaultValueInput)
+  const defaultValueInput = filterContext[objectField]
+  const [textInput, setTextInput] = useState(String(defaultValueInput))
 
   return (
     <Modal

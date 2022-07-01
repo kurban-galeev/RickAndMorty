@@ -1,13 +1,14 @@
 import { useNavigation } from '@react-navigation/native'
 
-import { useFilterContext } from 'src/modules/filter-context'
+interface Props {
+  setIsApply: (value: boolean) => void
+}
 
-export const useFilterCharacter = () => {
+export const useFilter = ({ setIsApply }: Props) => {
   const { goBack } = useNavigation()
-  const { filterContext, setFilterContext } = useFilterContext()
 
   const pressOnApply = () => {
-    setFilterContext({ ...filterContext, isApply: true })
+    setIsApply(true)
     goBack()
   }
 

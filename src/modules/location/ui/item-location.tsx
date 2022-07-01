@@ -1,14 +1,11 @@
 import React, { ReactElement } from 'react'
-import { Image } from 'react-native'
 import styled from 'styled-components/native'
 
 import { colors } from 'src/theme/colors'
 
-interface PropCharacter {
-  status: string | null | undefined
-  image: string | null | undefined
-  name: string | null | undefined
-  onPress: () => void
+interface PropLocation {
+  name: string
+  type: string
 }
 
 const Container = styled.TouchableOpacity`
@@ -17,18 +14,19 @@ const Container = styled.TouchableOpacity`
   border-color: ${colors.white[1]};
   border-radius: 8px;
   width: 163px;
-  height: 219px;
+  height: 80px;
 `
-const TextStatuse = styled.Text`
+const TextType = styled.Text`
+  max-height: 30px;
   padding: 12px 12px 0 12px;
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
   font-size: 11px;
   line-height: 13px;
-  color: ${colors.grey[2]};
+  color: ${colors.grey[0]};
 `
-const TextName = styled(TextStatuse)`
+const TextName = styled(TextType)`
   padding: 0 0 0 12px;
   max-height: 50px;
   font-weight: 900;
@@ -37,16 +35,10 @@ const TextName = styled(TextStatuse)`
   color: ${colors.greenDark};
 `
 
-export const ItemCharacter = ({
-  status,
-  image,
-  name,
-  onPress,
-}: PropCharacter): ReactElement => {
+export const ItemLocation = ({ name, type }: PropLocation): ReactElement => {
   return (
-    <Container activeOpacity={0.8} onPress={() => onPress()}>
-      <Image style={{ height: 140 }} source={{ uri: image ?? undefined }} />
-      <TextStatuse>{status}</TextStatuse>
+    <Container activeOpacity={0.8}>
+      <TextType>{type}</TextType>
       <TextName>{name}</TextName>
     </Container>
   )

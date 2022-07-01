@@ -4,45 +4,43 @@ import styled from 'styled-components/native'
 
 import { colors } from 'src/theme/colors'
 
-import { useFilterContext } from '../../../filter-context'
-import { PropCheckbox } from '../../types'
 import { TextCheckbox } from './text-checkbox'
 
 const Container = styled(BouncyCheckbox)`
   margin-left: 19px;
 `
 
-export const CheckBoxSearch = ({
+interface PropCheckboxSearch<T> {
+  textTitle: string
+  textDescription: string
+  objectField: keyof T
+  filterContext: T
+  setIsVisibleSearchModal: (value: boolean) => void
+}
+
+export const CheckBoxSearch = <
+  T extends { [K in keyof T]: T[K] extends string ? string : never },
+>({
   textTitle,
   textDescription,
-  isName,
-}: PropCheckbox): ReactElement => {
-  const {
-    setIsVisibleSearchModalName,
-    setIsVisibleSearchModalSpecies,
-    filterContext,
-  } = useFilterContext()
-
+  objectField,
+  filterContext,
+  setIsVisibleSearchModal,
+}: PropCheckboxSearch<T>): ReactElement => {
   return (
     <Container
       size={22}
       disableBuiltInState={true}
       fillColor={colors.indigo}
       unfillColor={colors.white[0]}
-      isChecked={
-        isName
-          ? filterContext.name.length > 0
-          : filterContext.species.length > 0
-      }
+      isChecked={filterContext[objectField].length > 0}
       textComponent={
         <TextCheckbox textTitle={textTitle} textDescription={textDescription} />
       }
       iconStyle={{ borderColor: colors.grey[2] }}
       useNativeDriver={true}
       onPress={() => {
-        isName
-          ? setIsVisibleSearchModalName(true)
-          : setIsVisibleSearchModalSpecies(true)
+        setIsVisibleSearchModal(true)
       }}
     />
   )

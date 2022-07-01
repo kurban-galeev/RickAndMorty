@@ -10,12 +10,16 @@ export const genderList = [
   { id: 3, gender: 'Genderless' },
   { id: 4, gender: 'Unknown' },
 ]
-export const defaultFilter = {
+export const defaultFilterCharacter = {
   status: '',
   name: '',
   gender: '',
   species: '',
-  isApply: false,
+}
+export const defaultFilterLocation = {
+  name: '',
+  type: '',
+  dimension: '',
 }
 
 export const defaultItemDetail = {

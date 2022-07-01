@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import { CharacterFilter } from 'src/modules/character/character-filter'
 import { DetailScreen } from 'src/modules/character/detail-screen'
+import { LocationFilter } from 'src/modules/location/location-filter'
 import { WelcomeScreen } from 'src/modules/welcome-screen'
 
 import { RoutesEnum } from './routes-enum'
@@ -33,7 +34,7 @@ export const RootNavigation = () => {
         />
         <Stack.Screen
           name={RoutesEnum.LOCATION_FILTER}
-          component={CharacterFilter}
+          component={LocationFilter}
           options={{ headerShown: false }}
         />
         <Stack.Screen

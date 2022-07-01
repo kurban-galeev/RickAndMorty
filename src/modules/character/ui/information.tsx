@@ -1,19 +1,18 @@
 import React, { ReactElement } from 'react'
+import { View } from 'react-native'
+import { noop } from 'lodash'
 import styled from 'styled-components/native'
 
 import { colors } from 'src/theme/colors'
+import { Arrow } from 'src/ui/icons'
 
 export interface PropInformation {
   title: string
   description: string | undefined
   isLast?: boolean | undefined
+  pressOnLocation?: () => void
 }
 
-const Container = styled.View<{ isLast: boolean }>`
-  border-bottom-width: ${({ isLast }) => (isLast ? 0 : 1)}px;
-  border-color: ${colors.grey[2]};
-  margin: 0 16px;
-`
 const TextTitle = styled.Text`
   padding-top: 9px;
 
@@ -33,16 +32,33 @@ const TextDescription = styled(TextTitle)`
   line-height: 18px;
   color: ${colors.grey[0]};
 `
+const ContainerArrow = styled.TouchableOpacity<{ isLast: boolean }>`
+  margin: 0 16px;
+  border-bottom-width: ${({ isLast }) => (isLast ? 0 : 1)}px;
+  border-color: ${colors.grey[2]};
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`
 
 export const Information = ({
   title,
   description,
   isLast = false,
+  pressOnLocation,
 }: PropInformation): ReactElement => {
   return (
-    <Container isLast={isLast}>
-      <TextTitle>{title}</TextTitle>
-      <TextDescription>{description}</TextDescription>
-    </Container>
+    <ContainerArrow
+      isLast={isLast}
+      activeOpacity={isLast ? 0.7 : 1}
+      onPress={() => {
+        isLast && pressOnLocation ? pressOnLocation() : noop()
+      }}>
+      <View>
+        <TextTitle>{title}</TextTitle>
+        <TextDescription>{description}</TextDescription>
+      </View>
+      {isLast && <Arrow />}
+    </ContainerArrow>
   )
 }

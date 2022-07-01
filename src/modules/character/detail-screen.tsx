@@ -9,7 +9,7 @@ import { colors } from 'src/theme/colors'
 import { Back } from 'src/ui/back'
 import { Loading } from 'src/ui/loading'
 
-import { useFilterContext } from '../filter-context'
+import { useFilterCharacter } from './filter-context'
 import { Information } from './ui/information'
 import { RenderItem } from './ui/renderItem'
 
@@ -89,10 +89,14 @@ const ContainerInfo = styled.View`
   border-top-width: 1px;
   border-color: ${colors.grey[2]};
 `
+const ContainerEpisode = styled(ContainerInfo)`
+  border-bottom-width: 0px;
+  margin-bottom: 100px;
+`
 
 export const DetailScreen = (): ReactElement => {
   const { goBack } = useNavigation()
-  const { idDetail } = useFilterContext()
+  const { idDetail } = useFilterCharacter()
   const { data, loading } = useGetCharacterQuery({
     variables: {
       id: idDetail,
@@ -102,53 +106,67 @@ export const DetailScreen = (): ReactElement => {
 
   return (
     <SafeAreaView>
-      {loading ? (
-        <Loading />
-      ) : (
+      {loading && <Loading />}
+
+      {!loading && (
         <View>
           <Header>
             <Back closeModal={goBack} />
+
             <ContainerTitle>
               <Title>{result?.name}</Title>
             </ContainerTitle>
           </Header>
+
           <ScrollView>
             <ContainerHeaderImage>
               <Image
                 style={{ width: '100%' }}
                 source={require('assets/images/headerDetail.png')}
               />
+
               <ContainerItemImage>
                 <ImageItem source={{ uri: result?.image }} />
               </ContainerItemImage>
+
               <DescriptionImage>
                 <TextStatus>{result?.status}</TextStatus>
+
                 <TextName>{result?.name}</TextName>
+
                 <TextSpecies>{result?.species}</TextSpecies>
               </DescriptionImage>
             </ContainerHeaderImage>
+
             <Subtitle>Informations</Subtitle>
+
             <ContainerInfo>
               <Information title="Gender" description={result?.gender} />
+
               <Information title="Origin" description={result?.origin.name} />
+
               <Information title="Type" description={result?.type} />
+
               <Information
                 title="Location"
                 description={result?.location.name}
                 isLast={true}
               />
             </ContainerInfo>
+
             <Subtitle>Episodes</Subtitle>
-            <ContainerInfo>
+
+            <ContainerEpisode>
               {result?.episode.map((item, index) => (
                 <RenderItem
+                  key={item.id}
                   episode={item.episode}
                   name={item.name}
                   date={item.air_date}
                   isLast={result?.episode.length - 1 === index}
                 />
               ))}
-            </ContainerInfo>
+            </ContainerEpisode>
           </ScrollView>
         </View>
       )}

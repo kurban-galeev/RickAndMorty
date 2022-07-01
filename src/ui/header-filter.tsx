@@ -1,14 +1,13 @@
 import React, { ReactNode } from 'react'
 import styled from 'styled-components/native'
 
-import { useFilterContext } from 'src/modules/filter-context'
 import { colors } from 'src/theme/colors'
-import { defaultFilter } from 'src/utils/constants'
 
 interface Props {
   title?: string
   children?: ReactNode
   onPress?: () => void
+  pressOnClear?: () => void
 }
 const HeaderBlock = styled.View`
   height: 60px;
@@ -65,13 +64,8 @@ export const HeaderFilter = ({
   children,
   title = 'Filter',
   onPress,
+  pressOnClear,
 }: Props) => {
-  const { setFilterContext } = useFilterContext()
-
-  const pressOnClear = () => {
-    setFilterContext(defaultFilter)
-  }
-
   return (
     <HeaderBlock>
       <ContainerButton onPress={pressOnClear}>

@@ -2,10 +2,9 @@ import React, { ReactElement } from 'react'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import styled from 'styled-components/native'
 
+import { useFilterCharacter } from 'src/modules/character/filter-context'
+import { PropCheckbox } from 'src/modules/character/types'
 import { colors } from 'src/theme/colors'
-
-import { useFilterContext } from '../../../filter-context'
-import { PropCheckbox } from '../../types'
 
 const Container = styled(BouncyCheckbox)`
   margin-left: 19px;
@@ -31,7 +30,7 @@ export const CheckBox = ({
   isLast,
   isStatus,
 }: PropCheckbox): ReactElement => {
-  const { setFilterContext, filterContext } = useFilterContext()
+  const { setFilterCharacter, filterCharacter } = useFilterCharacter()
 
   return (
     <Container
@@ -41,8 +40,8 @@ export const CheckBox = ({
       unfillColor={colors.white[0]}
       isChecked={
         isStatus
-          ? filterContext.status === textTitle
-          : filterContext.gender === textTitle
+          ? filterCharacter.status === textTitle
+          : filterCharacter.gender === textTitle
       }
       textComponent={
         <ContainerText isLast={isLast}>
@@ -54,9 +53,9 @@ export const CheckBox = ({
       onPress={() => {
         isStatus
           ? textTitle &&
-            setFilterContext({ ...filterContext, status: textTitle })
+            setFilterCharacter({ ...filterCharacter, status: textTitle })
           : textTitle &&
-            setFilterContext({ ...filterContext, gender: textTitle })
+            setFilterCharacter({ ...filterCharacter, gender: textTitle })
       }}
     />
   )

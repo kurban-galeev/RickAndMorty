@@ -254,6 +254,28 @@ export type GetCharacterQuery = {
   }
 }
 
+export type GetLocationsQueryVariables = Exact<{
+  name: InputMaybe<Scalars['String']>
+  page: InputMaybe<Scalars['Int']>
+  type: InputMaybe<Scalars['String']>
+  dimension: InputMaybe<Scalars['String']>
+}>
+
+export type GetLocationsQuery = {
+  __typename?: 'Query'
+  locations: {
+    __typename?: 'Locations'
+    info: { __typename?: 'Info'; pages: number; next: number }
+    results: Array<{
+      __typename?: 'Location'
+      id: string
+      name: string
+      type: string
+      dimension: string
+    }>
+  }
+}
+
 export const InfoFragmentDoc = gql`
   fragment info on Info {
     pages
@@ -428,4 +450,85 @@ export type GetCharacterLazyQueryHookResult = ReturnType<
 export type GetCharacterQueryResult = Apollo.QueryResult<
   GetCharacterQuery,
   GetCharacterQueryVariables
+>
+export const GetLocationsDocument = gql`
+  query getLocations(
+    $name: String
+    $page: Int
+    $type: String
+    $dimension: String
+  ) {
+    locations(
+      page: $page
+      filter: { name: $name, type: $type, dimension: $dimension }
+    ) {
+      info {
+        pages
+        next
+      }
+      results {
+        id
+        name
+        type
+        dimension
+      }
+    }
+  }
+`
+
+/**
+ * __useGetLocationsQuery__
+ *
+ * To run a query within a React component, call `useGetLocationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLocationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetLocationsQuery({
+ *   variables: {
+ *      name: // value for 'name'
+ *      page: // value for 'page'
+ *      type: // value for 'type'
+ *      dimension: // value for 'dimension'
+ *   },
+ * });
+ */
+export function useGetLocationsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetLocationsQuery,
+    GetLocationsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+
+  return Apollo.useQuery<GetLocationsQuery, GetLocationsQueryVariables>(
+    GetLocationsDocument,
+    options,
+  )
+}
+
+export function useGetLocationsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetLocationsQuery,
+    GetLocationsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+
+  return Apollo.useLazyQuery<GetLocationsQuery, GetLocationsQueryVariables>(
+    GetLocationsDocument,
+    options,
+  )
+}
+export type GetLocationsQueryHookResult = ReturnType<
+  typeof useGetLocationsQuery
+>
+export type GetLocationsLazyQueryHookResult = ReturnType<
+  typeof useGetLocationsLazyQuery
+>
+export type GetLocationsQueryResult = Apollo.QueryResult<
+  GetLocationsQuery,
+  GetLocationsQueryVariables
 >
