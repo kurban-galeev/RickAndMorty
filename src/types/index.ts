@@ -18,6 +18,7 @@ export type CharacterParamList = {
 export type LocationParamList = {
   [RoutesEnum.LOCATION]: undefined
   [RoutesEnum.LOCATION_FILTER]: undefined
+  [RoutesEnum.LOCATION_DETAIL]: undefined
 }
 
 export type EpisodeParamList = {

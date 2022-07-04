@@ -1,21 +1,18 @@
 import React, { ReactElement } from 'react'
 import { Image, ScrollView, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useNavigation } from '@react-navigation/native'
 import styled from 'styled-components/native'
 
 import { useGetCharacterQuery } from 'src/graphql/generated/graphql'
 import { colors } from 'src/theme/colors'
-import { Back } from 'src/ui/back'
+import { DescriptionDetail } from 'src/ui/descriptionDetail'
+import { HeaderDetail } from 'src/ui/header-detail'
 import { Loading } from 'src/ui/loading'
 
 import { useFilterCharacter } from './filter-context'
 import { Information } from './ui/information'
 import { RenderItem } from './ui/renderItem'
 
-const Header = styled.View`
-  flex-direction: row;
-`
 const Title = styled.Text`
   max-width: 200px;
   font-family: 'Roboto';
@@ -65,11 +62,7 @@ const ContainerItemImage = styled.View`
   width: 140px;
   height: 140px;
 `
-const ContainerTitle = styled.View`
-  margin: 15px 0;
-  width: 100%;
-  align-items: center;
-`
+
 const ContainerHeaderImage = styled.View`
   background: ${colors.grey[1]};
 `
@@ -94,8 +87,7 @@ const ContainerEpisode = styled(ContainerInfo)`
   margin-bottom: 100px;
 `
 
-export const DetailScreen = (): ReactElement => {
-  const { goBack } = useNavigation()
+export const DetailCharacter = (): ReactElement => {
   const { idDetail } = useFilterCharacter()
   const { data, loading } = useGetCharacterQuery({
     variables: {
@@ -110,14 +102,7 @@ export const DetailScreen = (): ReactElement => {
 
       {!loading && (
         <View>
-          <Header>
-            <Back closeModal={goBack} />
-
-            <ContainerTitle>
-              <Title>{result?.name}</Title>
-            </ContainerTitle>
-          </Header>
-
+          <HeaderDetail title={result?.name} />
           <ScrollView>
             <ContainerHeaderImage>
               <Image
@@ -128,14 +113,12 @@ export const DetailScreen = (): ReactElement => {
               <ContainerItemImage>
                 <ImageItem source={{ uri: result?.image }} />
               </ContainerItemImage>
-
-              <DescriptionImage>
-                <TextStatus>{result?.status}</TextStatus>
-
-                <TextName>{result?.name}</TextName>
-
-                <TextSpecies>{result?.species}</TextSpecies>
-              </DescriptionImage>
+              <DescriptionDetail
+                marginTop={90}
+                status={result?.status}
+                name={result?.name}
+                species={result?.species}
+              />
             </ContainerHeaderImage>
 
             <Subtitle>Informations</Subtitle>

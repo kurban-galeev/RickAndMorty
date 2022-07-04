@@ -6,14 +6,14 @@ import { colors } from 'src/theme/colors'
 interface PropLocation {
   name: string
   type: string
+  onPress: () => void
 }
 
 const Container = styled.TouchableOpacity`
-  margin: 9px 5px 5px 16px;
   border-width: 1px;
   border-color: ${colors.white[1]};
   border-radius: 8px;
-  width: 163px;
+  width: 100%;
   height: 80px;
 `
 const TextType = styled.Text`
@@ -35,9 +35,13 @@ const TextName = styled(TextType)`
   color: ${colors.greenDark};
 `
 
-export const ItemLocation = ({ name, type }: PropLocation): ReactElement => {
+export const ItemLocation = ({
+  name,
+  type,
+  onPress,
+}: PropLocation): ReactElement => {
   return (
-    <Container activeOpacity={0.8}>
+    <Container activeOpacity={0.8} onPress={onPress}>
       <TextType>{type}</TextType>
       <TextName>{name}</TextName>
     </Container>

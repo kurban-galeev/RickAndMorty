@@ -21,6 +21,8 @@ interface IFilterContext {
   setIsVisibleSearchModalDimension: (value: boolean) => void
   isApply: boolean
   setIsApply: (isApply: boolean) => void
+  idLocation: string
+  setIdLocation: (idLocation: string) => void
 }
 interface Props {
   children: ReactNode
@@ -37,6 +39,8 @@ const InitialValue: IFilterContext = {
   setIsVisibleSearchModalDimension: noop,
   isApply: false,
   setIsApply: noop,
+  idLocation: '1',
+  setIdLocation: noop,
 }
 
 const FilterContext = createContext(InitialValue)
@@ -50,6 +54,7 @@ export const FilterLocationProvider = ({ children }: Props) => {
   const [isVisibleSearchModalDimension, setIsVisibleSearchModalDimension] =
     useState(false)
   const [isApply, setIsApply] = useState(false)
+  const [idLocation, setIdLocation] = useState('')
 
   const value = useMemo(
     () => ({
@@ -63,6 +68,8 @@ export const FilterLocationProvider = ({ children }: Props) => {
       setIsVisibleSearchModalDimension,
       isApply,
       setIsApply,
+      idLocation,
+      setIdLocation,
     }),
     [
       filterLocation,
@@ -75,6 +82,8 @@ export const FilterLocationProvider = ({ children }: Props) => {
       setIsVisibleSearchModalDimension,
       isApply,
       setIsApply,
+      idLocation,
+      setIdLocation,
     ],
   )
 

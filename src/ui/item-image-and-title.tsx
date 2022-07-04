@@ -12,12 +12,13 @@ interface PropCharacter {
 }
 
 const Container = styled.TouchableOpacity`
-  margin: 9px 5px 5px 16px;
+  margin: 0px;
   border-width: 1px;
   border-color: ${colors.white[1]};
   border-radius: 8px;
-  width: 80%;
+  width: 100%;
   height: 219px;
+  max-width: 165px;
 `
 const TextStatuse = styled.Text`
   padding: 12px 12px 0 12px;
@@ -37,7 +38,7 @@ const TextName = styled(TextStatuse)`
   color: ${colors.greenDark};
 `
 
-export const ItemCharacter = ({
+export const ItemImageAndTitle = ({
   status,
   image,
   name,
@@ -45,7 +46,10 @@ export const ItemCharacter = ({
 }: PropCharacter): ReactElement => {
   return (
     <Container activeOpacity={0.8} onPress={() => onPress()}>
-      <Image style={{ height: 140 }} source={{ uri: image ?? undefined }} />
+      <Image
+        style={{ height: 140, borderTopLeftRadius: 8, borderTopRightRadius: 8 }}
+        source={{ uri: image ?? undefined }}
+      />
       <TextStatuse>{status}</TextStatuse>
       <TextName>{name}</TextName>
     </Container>

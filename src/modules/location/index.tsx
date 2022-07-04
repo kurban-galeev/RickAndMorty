@@ -23,15 +23,15 @@ const initialRequestedProps = {
 }
 const ContainerCharacter = styled.View`
   flex: 1;
-  flex-wrap: wrap;
   flex-direction: row;
+  margin: 15px;
 `
 export const uniqueNameLocation = makeVar<string[]>([])
 export const uniqueTypeLocation = makeVar<string[]>([])
 export const uniqueDimensionLocation = makeVar<string[]>([])
 
 export const LocationScreen = () => {
-  const { isApply, filterLocation } = useFilterLocation()
+  const { isApply, filterLocation, setIdLocation } = useFilterLocation()
   const { data, loading, fetchMore } = useGetLocationsQuery({
     variables: isApply
       ? {
@@ -67,6 +67,11 @@ export const LocationScreen = () => {
     uniqueDimensionLocation(uniqueDimension)
   }
 
+  const pressOnLocation = (id: string) => {
+    setIdLocation(id)
+    navigate(RoutesEnum.LOCATION_DETAIL)
+  }
+
   const fetchMoreCharacter = async () => {
     await fetchMore({
       variables: {
@@ -94,10 +99,14 @@ export const LocationScreen = () => {
             }}
             onEndReachedThreshold={2}
             numColumns={2}
-            keyExtractor={(item) => String(item.id)}
+            keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <ContainerCharacter>
-                <ItemLocation name={item.name} type={item.type} />
+                <ItemLocation
+                  name={item.name}
+                  type={item.type}
+                  onPress={() => pressOnLocation(item.id)}
+                />
               </ContainerCharacter>
             )}
           />

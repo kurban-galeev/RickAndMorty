@@ -11,14 +11,14 @@ import { RoutesEnum } from 'src/navigation/routes-enum'
 import { Header } from 'src/ui/header'
 import { Loading } from 'src/ui/loading'
 
+import { ItemImageAndTitle } from '../../ui/item-image-and-title'
 import { useFilterCharacter } from './filter-context'
 import { CharacterProp } from './types'
-import { ItemCharacter } from './ui/item-character'
 
 const ContainerCharacter = styled.View`
   flex: 1;
-  flex-wrap: wrap;
   flex-direction: row;
+  margin: 15px;
 `
 const InitialRequestedProps = {
   name: '',
@@ -99,7 +99,7 @@ export const CharacterScreen = () => {
             keyExtractor={(item) => String(item.id)}
             renderItem={({ item }) => (
               <ContainerCharacter>
-                <ItemCharacter
+                <ItemImageAndTitle
                   onPress={() => pressOnItems(item.id)}
                   status={item.status}
                   image={item.image}

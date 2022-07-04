@@ -2,7 +2,8 @@ import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import { CharacterFilter } from 'src/modules/character/character-filter'
-import { DetailScreen } from 'src/modules/character/detail-screen'
+import { DetailCharacter } from 'src/modules/character/detail-character'
+import { DetailLocation } from 'src/modules/location/detail-location'
 import { LocationFilter } from 'src/modules/location/location-filter'
 import { WelcomeScreen } from 'src/modules/welcome-screen'
 
@@ -29,12 +30,17 @@ export const RootNavigation = () => {
         />
         <Stack.Screen
           name={RoutesEnum.CHARACTER_DETAIL}
-          component={DetailScreen}
+          component={DetailCharacter}
           options={{ headerShown: false }}
         />
         <Stack.Screen
           name={RoutesEnum.LOCATION_FILTER}
           component={LocationFilter}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={RoutesEnum.LOCATION_DETAIL}
+          component={DetailLocation}
           options={{ headerShown: false }}
         />
         <Stack.Screen
