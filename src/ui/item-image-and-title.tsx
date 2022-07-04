@@ -1,14 +1,18 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useContext } from 'react'
 import { Image } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 import styled from 'styled-components/native'
 
+import { useFilterCharacter } from 'src/modules/character/filter-context'
+import { CharacterProp } from 'src/modules/character/types'
+import { RoutesEnum } from 'src/navigation/routes-enum'
 import { colors } from 'src/theme/colors'
 
 interface PropCharacter {
   status: string | null | undefined
   image: string | null | undefined
   name: string | null | undefined
-  onPress: () => void
+  id: string
 }
 
 const Container = styled.TouchableOpacity`
@@ -42,10 +46,18 @@ export const ItemImageAndTitle = ({
   status,
   image,
   name,
-  onPress,
+  id,
 }: PropCharacter): ReactElement => {
+  const { navigate } = useNavigation<CharacterProp>()
+  const { setIdDetail } = useFilterCharacter()
+
+  const pressOnItem = () => {
+    setIdDetail(id)
+    navigate(RoutesEnum.CHARACTER_DETAIL)
+  }
+
   return (
-    <Container activeOpacity={0.8} onPress={() => onPress()}>
+    <Container activeOpacity={0.8} onPress={() => pressOnItem()}>
       <Image
         style={{ height: 140, borderTopLeftRadius: 8, borderTopRightRadius: 8 }}
         source={{ uri: image ?? undefined }}

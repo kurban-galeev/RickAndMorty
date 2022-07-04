@@ -72,7 +72,7 @@ export const LocationScreen = () => {
     navigate(RoutesEnum.LOCATION_DETAIL)
   }
 
-  const fetchMoreCharacter = async () => {
+  const fetchMoreLocation = async () => {
     await fetchMore({
       variables: {
         page: nextPage,
@@ -94,10 +94,8 @@ export const LocationScreen = () => {
         <View style={{ marginBottom: 180 }}>
           <FlatList
             data={results}
-            onEndReached={() => {
-              fetchMoreCharacter()
-            }}
-            onEndReachedThreshold={2}
+            onEndReached={nextPage ? fetchMoreLocation : null}
+            onEndReachedThreshold={3}
             numColumns={2}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (

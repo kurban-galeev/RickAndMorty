@@ -1,17 +1,23 @@
 import React, { ReactElement } from 'react'
 import { Image, ScrollView, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { useNavigation } from '@react-navigation/native'
 import styled from 'styled-components/native'
 
 import { useGetCharacterQuery } from 'src/graphql/generated/graphql'
+import { RoutesEnum } from 'src/navigation/routes-enum'
 import { colors } from 'src/theme/colors'
 import { DescriptionDetail } from 'src/ui/descriptionDetail'
+import { EpisodeItem } from 'src/ui/episode-item'
 import { HeaderDetail } from 'src/ui/header-detail'
 import { Loading } from 'src/ui/loading'
 
+import { useFilterEpisode } from '../episode/filter-context'
+import { EpisodeProp } from '../episode/types'
+import { useFilterLocation } from '../location/filter-context'
+import { LocationProp } from '../location/types'
 import { useFilterCharacter } from './filter-context'
 import { Information } from './ui/information'
-import { RenderItem } from './ui/renderItem'
 
 const Title = styled.Text`
   max-width: 200px;
@@ -23,24 +29,12 @@ const Title = styled.Text`
   text-align: center;
   color: ${colors.greenDark};
 `
-const TextStatus = styled(Title)`
-  font-weight: 400;
-  font-size: 11px;
-  line-height: 13px;
-  color: ${colors.grey[0]};
-`
 const TextName = styled(Title)`
   max-width: 100%;
   font-weight: 700;
   font-size: 28px;
   line-height: 34px;
   color: ${colors.greenDark};
-`
-const TextSpecies = styled(Title)`
-  font-size: 13px;
-  line-height: 18px;
-  text-transform: uppercase;
-  color: ${colors.grey[5]};
 `
 const Subtitle = styled(TextName)`
   padding: 20px 0 9.5px 16px;
@@ -72,11 +66,6 @@ const ImageItem = styled.Image`
   border-radius: 65px;
   position: absolute;
 `
-const DescriptionImage = styled.View`
-  align-items: center;
-  margin-top: 90px;
-  margin-bottom: 20px;
-`
 const ContainerInfo = styled.View`
   border-bottom-width: 1px;
   border-top-width: 1px;
@@ -88,13 +77,20 @@ const ContainerEpisode = styled(ContainerInfo)`
 `
 
 export const DetailCharacter = (): ReactElement => {
+  const { navigate } = useNavigation<LocationProp>()
   const { idDetail } = useFilterCharacter()
+  const { setIdLocation } = useFilterLocation()
   const { data, loading } = useGetCharacterQuery({
     variables: {
       id: idDetail,
     },
   })
   const result = data?.character
+
+  const pressOnLocation = (id: string | undefined) => {
+    id && setIdLocation(id)
+    navigate(RoutesEnum.LOCATION_DETAIL)
+  }
 
   return (
     <SafeAreaView>
@@ -134,6 +130,7 @@ export const DetailCharacter = (): ReactElement => {
                 title="Location"
                 description={result?.location.name}
                 isLast={true}
+                pressOnLocation={() => pressOnLocation(result?.location.id)}
               />
             </ContainerInfo>
 
@@ -141,11 +138,12 @@ export const DetailCharacter = (): ReactElement => {
 
             <ContainerEpisode>
               {result?.episode.map((item, index) => (
-                <RenderItem
+                <EpisodeItem
                   key={item.id}
                   episode={item.episode}
                   name={item.name}
                   date={item.air_date}
+                  id={item.id}
                   isLast={result?.episode.length - 1 === index}
                 />
               ))}

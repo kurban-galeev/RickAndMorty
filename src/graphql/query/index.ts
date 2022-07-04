@@ -52,6 +52,7 @@ export const CHARACTER = gql`
       }
       location {
         name
+        id
       }
       image
       episode {
@@ -96,6 +97,38 @@ export const LOCATION = gql`
       type
       dimension
       residents {
+        id
+        name
+        status
+        image
+      }
+    }
+  }
+`
+export const EPISODES = gql`
+  query getEpisodes($name: String, $page: Int, $episode: String) {
+    episodes(page: $page, filter: { name: $name, episode: $episode }) {
+      info {
+        pages
+        next
+      }
+      results {
+        id
+        name
+        episode
+        air_date
+      }
+    }
+  }
+`
+export const EPISODE = gql`
+  query getEpisode($id: ID!) {
+    episode(id: $id) {
+      id
+      name
+      episode
+      air_date
+      characters {
         id
         name
         status

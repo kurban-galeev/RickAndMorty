@@ -1,17 +1,16 @@
 import React, { ReactElement } from 'react'
 import { FlatList, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { noop } from 'lodash'
 import styled from 'styled-components/native'
 
-import { useGetLocationQuery } from 'src/graphql/generated/graphql'
+import { useGetEpisodeQuery } from 'src/graphql/generated/graphql'
 import { colors } from 'src/theme/colors'
 import { DescriptionDetail } from 'src/ui/descriptionDetail'
 import { HeaderDetail } from 'src/ui/header-detail'
 import { ItemImageAndTitle } from 'src/ui/item-image-and-title'
 import { Loading } from 'src/ui/loading'
 
-import { useFilterLocation } from './filter-context'
+import { useFilterEpisode } from './filter-context'
 
 const Title = styled.Text`
   max-width: 200px;
@@ -49,14 +48,14 @@ const ContainerEpisode = styled.View`
   margin: 15px;
 `
 
-export const DetailLocation = (): ReactElement => {
-  const { idLocation } = useFilterLocation()
-  const { data, loading } = useGetLocationQuery({
+export const DetailEpisode = (): ReactElement => {
+  const { idEpisode } = useFilterEpisode()
+  const { data, loading } = useGetEpisodeQuery({
     variables: {
-      id: idLocation,
+      id: idEpisode,
     },
   })
-  const result = data?.location
+  const result = data?.episode
 
   return (
     <SafeAreaView>
@@ -69,16 +68,16 @@ export const DetailLocation = (): ReactElement => {
           <ContainerHeaderImage>
             <DescriptionDetail
               marginTop={20}
-              status={result?.type}
+              status={result?.episode}
               name={result?.name}
-              species={result?.dimension}
+              species={result?.air_date}
             />
           </ContainerHeaderImage>
 
           <Subtitle>Residents</Subtitle>
 
           <FlatList
-            data={result?.residents}
+            data={result?.characters}
             numColumns={2}
             keyExtractor={(item) => String(item.id)}
             renderItem={({ item }) => (

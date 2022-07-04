@@ -3,6 +3,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import { CharacterFilter } from 'src/modules/character/character-filter'
 import { DetailCharacter } from 'src/modules/character/detail-character'
+import { DetailEpisode } from 'src/modules/episode/detail-episode'
+import { EpisodeFilter } from 'src/modules/episode/episode-filter'
 import { DetailLocation } from 'src/modules/location/detail-location'
 import { LocationFilter } from 'src/modules/location/location-filter'
 import { WelcomeScreen } from 'src/modules/welcome-screen'
@@ -45,7 +47,12 @@ export const RootNavigation = () => {
         />
         <Stack.Screen
           name={RoutesEnum.EPISODE_FILTER}
-          component={CharacterFilter}
+          component={EpisodeFilter}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={RoutesEnum.EPISODE_DETAIL}
+          component={DetailEpisode}
           options={{ headerShown: false }}
         />
         <Stack.Screen name={RoutesEnum.TAB_BAR} component={TabBar} />

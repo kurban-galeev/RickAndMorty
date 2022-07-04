@@ -6,6 +6,7 @@ import { RootNavigation } from 'src/navigation/root'
 
 import { client } from './graphql/apollo'
 import { FilterCharacterProvider } from './modules/character/filter-context'
+import { FilterEpisodeProvider } from './modules/episode/filter-context'
 import { FilterLocationProvider } from './modules/location/filter-context'
 
 export const App = () => {
@@ -13,9 +14,11 @@ export const App = () => {
     <ApolloProvider client={client}>
       <FilterLocationProvider>
         <FilterCharacterProvider>
-          <NavigationContainer>
-            <RootNavigation />
-          </NavigationContainer>
+          <FilterEpisodeProvider>
+            <NavigationContainer>
+              <RootNavigation />
+            </NavigationContainer>
+          </FilterEpisodeProvider>
         </FilterCharacterProvider>
       </FilterLocationProvider>
     </ApolloProvider>

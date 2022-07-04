@@ -1,6 +1,6 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 
-import { Characters, Locations } from './generated/graphql'
+import { Characters, Episodes, Locations } from './generated/graphql'
 
 export const client = new ApolloClient({
   uri: 'https://rickandmortyapi.com/graphql',
@@ -14,10 +14,6 @@ export const client = new ApolloClient({
             merge(existing: Characters, incoming: Characters) {
               if (!existing) {
                 return incoming
-              }
-
-              if (!incoming) {
-                return existing
               }
 
               if (existing.info.next === incoming.info.next) {
@@ -38,8 +34,22 @@ export const client = new ApolloClient({
                 return incoming
               }
 
-              if (!incoming) {
+              if (existing.info.next === incoming.info.next) {
                 return existing
+              }
+
+              return {
+                ...incoming,
+                results: [...existing.results, ...incoming.results],
+              }
+            },
+          },
+          episodes: {
+            keyArgs: ['filter', ['name', 'episode']],
+
+            merge(existing: Episodes, incoming: Episodes) {
+              if (!existing) {
+                return incoming
               }
 
               if (existing.info.next === incoming.info.next) {

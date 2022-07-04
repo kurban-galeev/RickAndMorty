@@ -14,6 +14,7 @@ const Container = styled.TouchableOpacity`
   border-color: ${colors.white[1]};
   border-radius: 8px;
   width: 100%;
+  max-width: 165px;
   height: 80px;
 `
 const TextType = styled.Text`

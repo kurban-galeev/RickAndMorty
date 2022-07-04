@@ -1,6 +1,10 @@
 import React, { ReactElement } from 'react'
+import { useNavigation } from '@react-navigation/native'
 import styled from 'styled-components/native'
 
+import { useFilterEpisode } from 'src/modules/episode/filter-context'
+import { EpisodeProp } from 'src/modules/episode/types'
+import { RoutesEnum } from 'src/navigation/routes-enum'
 import { colors } from 'src/theme/colors'
 import { Arrow } from 'src/ui/icons'
 
@@ -9,6 +13,7 @@ interface Prop {
   name: string
   date: string
   isLast?: boolean
+  id: string
 }
 
 const Container = styled.TouchableOpacity<{ isLast: boolean }>`
@@ -45,14 +50,26 @@ const ContainerArrow = styled.View`
   align-items: center;
 `
 
-export const RenderItem = ({
+export const EpisodeItem = ({
   episode,
   name,
   date,
   isLast = false,
+  id,
 }: Prop): ReactElement => {
+  const { setIdEpisode } = useFilterEpisode()
+  const { navigate } = useNavigation<EpisodeProp>()
+
+  const pressOnItem = () => {
+    setIdEpisode(id)
+    navigate(RoutesEnum.EPISODE_DETAIL)
+  }
+
   return (
-    <Container isLast={isLast} activeOpacity={0.7}>
+    <Container
+      isLast={isLast}
+      activeOpacity={0.7}
+      onPress={() => pressOnItem()}>
       <TextEpisode>{episode}</TextEpisode>
       <ContainerArrow>
         <TextName>{name}</TextName>

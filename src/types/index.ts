@@ -24,6 +24,7 @@ export type LocationParamList = {
 export type EpisodeParamList = {
   [RoutesEnum.EPISODE]: undefined
   [RoutesEnum.EPISODE_FILTER]: undefined
+  [RoutesEnum.EPISODE_DETAIL]: undefined
 }
 
 export interface PropSvg {
@@ -46,4 +47,8 @@ export interface IFilterLocation {
   name: string
   type: string
   dimension: string
+}
+export interface IFilterEpisode {
+  name: string
+  episode: string
 }

@@ -34,13 +34,8 @@ export const CharacterScreen = () => {
   const { navigate } = useNavigation<CharacterProp>()
 
   const pressOnFilter = () => navigate(RoutesEnum.CHARACTER_FILTER)
-  const { filterCharacter, setIdDetail, isApply } = useFilterCharacter()
+  const { filterCharacter, isApply } = useFilterCharacter()
   const { IsFilterEmpty } = useCheckIsFilterEmpty(filterCharacter)
-
-  const pressOnItems = (id: string) => {
-    setIdDetail(id)
-    navigate(RoutesEnum.CHARACTER_DETAIL)
-  }
 
   const { data, loading, fetchMore } = useGetCharactersQuery({
     variables: isApply
@@ -91,16 +86,14 @@ export const CharacterScreen = () => {
         <View style={{ marginBottom: 100 }}>
           <FlatList
             data={results}
-            onEndReached={() => {
-              fetchMoreCharacter()
-            }}
+            onEndReached={nextPage ? fetchMoreCharacter : null}
             onEndReachedThreshold={3}
             numColumns={2}
             keyExtractor={(item) => String(item.id)}
             renderItem={({ item }) => (
               <ContainerCharacter>
                 <ItemImageAndTitle
-                  onPress={() => pressOnItems(item.id)}
+                  id={item.id}
                   status={item.status}
                   image={item.image}
                   name={item.name}

@@ -31,4 +31,8 @@ export const defaultItemDetail = {
   gender: '',
   type: '',
 }
+export const defaultFilterEpisode = {
+  name: '',
+  episode: '',
+}
 export const pathHeaderImage = 'assets/images/headerDetail.png'
