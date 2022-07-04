@@ -16,3 +16,19 @@ export const useFilter = ({ setIsApply }: Props) => {
     pressOnApply,
   }
 }
+
+export const useCheckIsFilterEmpty = (object: any) => {
+  const IsFilterEmpty = () => {
+    for (const value in object) {
+      if (object[value].length > 0) {
+        return false
+      }
+    }
+
+    return true
+  }
+
+  return {
+    IsFilterEmpty,
+  }
+}

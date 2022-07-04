@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native'
 import styled from 'styled-components/native'
 
 import { useGetCharactersQuery } from 'src/graphql/generated/graphql'
+import { useCheckIsFilterEmpty } from 'src/hooks'
 import { RoutesEnum } from 'src/navigation/routes-enum'
 import { Header } from 'src/ui/header'
 import { Loading } from 'src/ui/loading'
@@ -34,6 +35,7 @@ export const CharacterScreen = () => {
 
   const pressOnFilter = () => navigate(RoutesEnum.CHARACTER_FILTER)
   const { filterCharacter, setIdDetail, isApply } = useFilterCharacter()
+  const { IsFilterEmpty } = useCheckIsFilterEmpty(filterCharacter)
 
   const pressOnItems = (id: string) => {
     setIdDetail(id)
@@ -77,7 +79,11 @@ export const CharacterScreen = () => {
 
   return (
     <SafeAreaView>
-      <Header title="Character" onPress={pressOnFilter} />
+      <Header
+        title="Character"
+        onPress={pressOnFilter}
+        isFilter={IsFilterEmpty()}
+      />
 
       {loading ? (
         <Loading />

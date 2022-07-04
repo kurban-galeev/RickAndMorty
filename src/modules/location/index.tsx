@@ -6,6 +6,7 @@ import { noop } from 'lodash'
 import styled from 'styled-components/native'
 
 import { useGetLocationsQuery } from 'src/graphql/generated/graphql'
+import { useCheckIsFilterEmpty } from 'src/hooks'
 import { RoutesEnum } from 'src/navigation/routes-enum'
 import { Header } from 'src/ui/header'
 import { Loading } from 'src/ui/loading'
@@ -48,6 +49,7 @@ export const LocationScreen = () => {
 
   const results = data?.locations.results
   const nextPage = data?.locations?.info?.next
+  const { IsFilterEmpty } = useCheckIsFilterEmpty(filterLocation)
 
   if (!loading && results) {
     const uniqueName = Array.from(
@@ -75,7 +77,11 @@ export const LocationScreen = () => {
 
   return (
     <SafeAreaView>
-      <Header title="Location" onPress={pressOnFilter} />
+      <Header
+        title="Location"
+        onPress={pressOnFilter}
+        isFilter={IsFilterEmpty()}
+      />
 
       {loading ? (
         <Loading />

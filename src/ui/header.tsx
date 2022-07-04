@@ -7,6 +7,7 @@ interface Props {
   title?: string
   children?: ReactNode
   onPress?: () => void
+  isFilter?: boolean
 }
 const HeaderBlock = styled.View`
   margin: 10px 16px;
@@ -31,14 +32,24 @@ const FilterText = styled.Text`
 `
 const Filter = styled.TouchableOpacity`
   position: absolute;
+  flex-direction: row;
+  align-items: center;
   z-index: 1;
   right: 16px;
 `
+const Circle = styled.View`
+  margin-right: 6px;
+  height: 12px;
+  width: 12px;
+  border-radius: 6px;
+  background: ${colors.indigo};
+`
 
-export const Header = ({ children, title, onPress }: Props) => {
+export const Header = ({ children, title, onPress, isFilter }: Props) => {
   return (
     <HeaderBlock>
       <Filter onPress={onPress} activeOpacity={0.2}>
+        {!isFilter && <Circle />}
         <FilterText>Filter</FilterText>
       </Filter>
       <Title>{title}</Title>
